@@ -1,0 +1,58 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "utop.js",
+  "homepage": "https://github.com/bathan1/utop",
+  "items": [
+    {
+      "name": "import-rewriter-loader.cjs",
+      "type": "registry:file",
+      "files": [
+        {
+          "path": "./import-rewriter-loader.cjs",
+          "type": "registry:file",
+          "target": "~/import-rewriter-loader.cjs"
+        }
+      ]
+    },
+    {
+      "name": "types.js",
+      "type": "registry:lib",
+      "files": [
+        {
+          "path": "./src/types.ts",
+          "type": "registry:lib"
+        }
+      ]
+    },
+    {
+      "name": "map.js",
+      "type": "registry:lib",
+      "files": [
+        {
+          "path": "./src/map.ts",
+          "type": "registry:lib"
+        }
+      ]
+    },
+    {
+      "name": "not.js",
+      "type": "registry:lib",
+      "files": [
+        {
+          "path": "./src/not.ts",
+          "type": "registry:lib"
+        }
+      ]
+    },
+    {
+      "name": "zip.js",
+      "type": "registry:lib",
+      "files": [
+        {
+          "path": "./src/zip.ts",
+          "type": "registry:lib"
+        }
+      ]
+    }
+  ]
+}
