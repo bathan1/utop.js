@@ -15,8 +15,6 @@ import type { Promisable } from "./types.js";
  * console.log(firstCompleted.completed); // true
  * ```
  * 
- * ### Async
- * 
  * If `ITERABLE` has an {@link Symbol.asyncIterator} property,
  * then `find` searches for it using the `for await` expression,
  * and returns a {@lihnk Promise}, regardless of whether or not it 

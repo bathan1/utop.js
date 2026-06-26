@@ -1,7 +1,16 @@
 /**
  * `chunk(limit, iterable)` is a new generator that yields elements of `ITERABLE` materialized as arrays of max size `LIMIT`.
+ *
+ * ### Installation
+ * ```bash
+ * pnpm dlx shadcn@latest add bathan1/utop/chunk.js
+ * ```
  * 
  * ### Usage
+ * ```ts
+ * import { chunk } from "@/lib/utop/chunk.js";
+ * ```
+ *
  * ```ts
  * const lotsOfRows = createLotsOfData();
  * const insertableChunks = chunk(500, lotsOfRows);
@@ -13,9 +22,7 @@
  * }
  * ```
  * 
- * ### Async
- * `chunk` returns an {@link AsyncGenerator} instead of the sync version
- * when `ITERABLE` is an async iterable.
+ * `chunk` returns an {@link AsyncGenerator} when `ITERABLE` is an async iterable.
  * 
  * ```ts
  * async function* fetchTodos(ids: number[]) {
@@ -30,7 +37,6 @@
  * ```
  * 
  * ### Examples
- * 
  * @example
  * It yields arrays of max size `LIMIT`
  * ```ts
