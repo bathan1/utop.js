@@ -8,12 +8,13 @@ describe("filter(predicate, iterable)", () => {
     ]);
   });
 
-  it("awaits `PREDICATE` when `ITERABLE` is async", async () => {
+  it("does *not* await `PREDICATE` even when `ITERABLE` is async", async () => {
     async function* values() {
       yield 1;
       yield 2;
       yield 3;
     }
-    expect(await Array.fromAsync(filter(async (value) => value > 1, values()))).toEqual([2, 3]);
+    expect(await Array.fromAsync(filter((value) => value > 1, values()))).toEqual([2, 3]);
+    expect(await Array.fromAsync(filter(async (value) => value > 1, values()))).toEqual([1, 2, 3]);
   });
 });

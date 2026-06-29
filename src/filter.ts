@@ -46,25 +46,33 @@ import type { Promisable } from "./types.js";
  */
 export function filter<T, S extends T>(
   predicate: (value: T, index: number) => value is S,
+  iterable: AsyncIterable<T>
+): AsyncGenerator<S, void, unknown>;
+
+export function filter<T>(
+  predicate: (value: T, index: number) => unknown,
+  iterable: AsyncIterable<T>
+): AsyncGenerator<T, void, unknown>;
+
+export function filter<T, S extends T>(
+  predicate: (value: T, index: number) => value is S,
   iterable: Iterable<T>
 ): Generator<S, void, unknown>;
+
 export function filter<T>(
   predicate: (value: T, index: number) => unknown,
   iterable: Iterable<T>
 ): Generator<T, void, unknown>;
+
 export function filter<T>(
-  predicate: (value: T, index: number) => Promisable<unknown>,
-  iterable: AsyncIterable<T>
-): AsyncGenerator<T, void, unknown>;
-export function filter<T>(
-  predicate: (value: T, index: number) => Promisable<unknown>,
+  predicate: (value: T, index: number) => unknown,
   iterable: Iterable<T> | AsyncIterable<T>
 ): Generator<T, void, unknown> | AsyncGenerator<T, void, unknown> {
   if (Symbol.asyncIterator in iterable) {
     return (async function* filter() {
       let index = 0;
       for await (const value of iterable) {
-        if (await predicate(value, index++)) yield value;
+        if (predicate(value, index++)) yield value;
       }
     })();
   }

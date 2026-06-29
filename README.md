@@ -88,11 +88,7 @@ export function reduce<T, U>(
 So with functions that have positional "overloads", Utop.js aims to stay faithful to the most practical overload.
 Utop.js's function overloads are primarily to improve the TypeScript development experience.
 
-Utop.js exports all of the [standard iterator helper methods](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Iterator#instance_methods)
-along with some extra helper functions as well. Each of them have identical names to their method counterparts and
-behave exactly the same as them with the exception of `find` which throws instead of returning `undefined` when the
-search element could not be found instead of returning `undefined`. Any deviations such as this will be documented
-in the function's docstrings.
+Utop.js exports all of the [standard iterator helper methods](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Iterator#instance_methods) along with some extra helper functions as well. Each of them have identical names to their method counterparts and behave exactly the same as them.
 
 ## Async API
 Function overloads for the standard helper methods in Utop.js can be roughly split up into two categories:
@@ -104,7 +100,7 @@ Function overloads for the standard helper methods in Utop.js can be roughly spl
 Compile-time only overloads refer to function overloads where we don't
 have to touch the implementation to satisfy its signature.
 
-In [`find.js`](./src/find.ts), for example, we can see that it includes the following overloads:
+In [`findErr.js`](./src/findErr.ts), for example, we can see that it includes the following overloads:
 
 ```ts
 // src/find.ts
@@ -115,7 +111,7 @@ export function find<T, S extends T>(
 export function find<T>(
   predicate: (value: T, index: number) => unknown,
   iterable: Iterable<T>
-): T;
+): Option<T>;
 ```
 
 So when we use an explicit type-guard in `find`, typescript is able

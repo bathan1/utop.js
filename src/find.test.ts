@@ -1,16 +1,16 @@
-import { describe, it, expect } from "vitest";
+import { describe, expect, it } from "vitest";
 import { find } from "./find.js";
 
-describe("find(callbackfn, iterable)", () => {
-  it("returns the first value that satisfies `CALLBACKFN`", () => {
-    expect(find((x) => x > 2, [1, 2, 3, 4])).toBe(3);
+describe("find(predicate, iterable)", () => {
+  it("returns the first matching value", () => {
+    expect(find((value) => value > 2, [1, 2, 3, 4])).toBe(3);
   });
 
-  it("throws when no value satisfies `CALLBACKFN`", () => {
-    expect(() => find((x) => x > 4, [1, 2, 3])).toThrow(RangeError);
+  it("returns `undefined` when no value matches", () => {
+    expect(find((value) => value > 4, [1, 2, 3])).toBeUndefined();
   });
 
-  it("returns asynchronously when for async ITERABLE even when they also have a sync iterator symbol", async () => {
+  it("returns asynchronously for async ITERABLE even when it also has a sync iterator symbol", async () => {
     const iterable = {
       async *[Symbol.asyncIterator]() {
         yield 1;
@@ -24,35 +24,17 @@ describe("find(callbackfn, iterable)", () => {
       },
     };
 
-    const syncOverridenPromise = find((x) => x > 2, iterable);
-    expect(syncOverridenPromise).toBeInstanceOf(Promise);
-    expect(await syncOverridenPromise).toEqual(3);
-  });
-
-  it("only returns a Promise when ITERABLE is an async iterable", async () => {
-    const iterable = {
-      async *[Symbol.asyncIterator]() {
-        yield 1;
-        yield 2;
-        yield 3;
-      },
-    };
-
-    const promise = find((x) => x > 2, iterable);
+    const promise = find((value) => value > 2, iterable);
     expect(promise).toBeInstanceOf(Promise);
-    expect(await promise).toEqual(3);
-
-    // no await on async functions it just checks for truthiness immediately
-    const notPromise = find(async (x) => x > 2, [1, 2, 3]);
-    expect(notPromise).toEqual(1);
+    expect(await promise).toBe(3);
   });
 
-  it("awaits `PREDICATE` for async `ITERABLE`", async () => {
+  it("returns `undefined` asynchronously when no async value matches", async () => {
     async function* values() {
       yield 1;
       yield 2;
     }
 
-    expect(await find(async (value) => value === 2, values())).toBe(2);
+    await expect(find((value) => value > 2, values())).resolves.toBeUndefined();
   });
 });

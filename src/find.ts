@@ -1,10 +1,8 @@
-import type { Promisable } from "./types.js";
+import { type Option, None } from "./types.js";
 
 /**
  * `find(predicate, iterable)` returns the first `value` in `ITERABLE` that
- * satisfies `PREDICATE(x)` or **throws** if that `value` can't be found.
- *
- * @throws a {@link RangeError} when `PREDICATE` fails to find a value
+ * satisfies `PREDICATE(x)` or returns `undefined` otherwise.
  *
  * ### Installation
  * ```ts
@@ -25,9 +23,9 @@ import type { Promisable } from "./types.js";
  * ```
  *
  * If `ITERABLE` has an {@link Symbol.asyncIterator} property,
- * then `find` searches for it using the `for await` expression,
- * and returns a {@lihnk Promise}, regardless of whether or not it
- * also has the sync symbol (though in practice this will *never* happen).
+ * then `find` searches it using the `for await` expression,
+ * and returns a {@link Promise}, regardless of whether or not it
+ * also has the sync symbol.
  *
  * ```
  * async function* count(n: number) {
@@ -40,24 +38,24 @@ import type { Promisable } from "./types.js";
  * console.log(firstOdd) // 1
  * ```
  *
- * When `ITERABLE` is async, `find` also awaits `PREDICATE`.
+ * `find` does not await `PREDICATE`; async behavior is only provided for async iterables.
  *
  * ### Examples
  *
  * @example
- * It returns the first value that satisfies `CALLBACKFN`
+ * It returns the first matching value
  * ```ts
- * expect(find((x) => x > 2, [1, 2, 3, 4])).toBe(3);
+ * expect(find((value) => value > 2, [1, 2, 3, 4])).toBe(3);
  * ```
  *
  * @example
- * It throws when no value satisfies `CALLBACKFN`
+ * It returns `undefined` when no value matches
  * ```ts
- * expect(() => find((x) => x > 4, [1, 2, 3])).toThrow(RangeError);
+ * expect(find((value) => value > 4, [1, 2, 3])).toBeUndefined();
  * ```
  *
  * @example
- * It returns asynchronously when for async ITERABLE even when they also have a sync iterator symbol
+ * It returns asynchronously for async ITERABLE even when it also has a sync iterator symbol
  * ```ts
  * const iterable = {
  *   async *[Symbol.asyncIterator]() {
@@ -72,71 +70,54 @@ import type { Promisable } from "./types.js";
  *   },
  * };
  *
- * const syncOverridenPromise = find((x) => x > 2, iterable);
- * expect(syncOverridenPromise).toBeInstanceOf(Promise);
- * expect(await syncOverridenPromise).toEqual(3);
- * ```
- *
- * @example
- * It only returns a Promise when ITERABLE is an async iterable
- * ```ts
- * const iterable = {
- *   async *[Symbol.asyncIterator]() {
- *     yield 1;
- *     yield 2;
- *     yield 3;
- *   },
- * };
- *
- * const promise = find((x) => x > 2, iterable);
+ * const promise = find((value) => value > 2, iterable);
  * expect(promise).toBeInstanceOf(Promise);
- * expect(await promise).toEqual(3);
- *
- * // no await on async functions it just checks for truthiness immediately
- * const notPromise = find(async (x) => x > 2, [1, 2, 3]);
- * expect(notPromise).toEqual(1);
+ * expect(await promise).toBe(3);
  * ```
  *
  * @example
- * It awaits `PREDICATE` for async `ITERABLE`
+ * It returns `undefined` asynchronously when no async value matches
  * ```ts
  * async function* values() {
  *   yield 1;
  *   yield 2;
  * }
  *
- * expect(await find(async (value) => value === 2, values())).toBe(2);
+ * await expect(find((value) => value > 2, values())).resolves.toBeUndefined();
  * ```
  */
 export function find<T, S extends T>(
   predicate: (value: T, index: number) => value is S,
   iterable: AsyncIterable<T>
-): Promise<S>;
+): Promise<Option<S>>;
 export function find<T>(
-  predicate: (value: T, index: number) => Promisable<unknown>,
+  predicate: (value: T, index: number) => unknown,
   iterable: AsyncIterable<T>
-): Promise<T>;
+): Promise<Option<T>>;
 export function find<T, S extends T>(
   predicate: (value: T, index: number) => value is S,
   iterable: Iterable<T>
-): S;
-export function find<T>(predicate: (value: T, index: number) => unknown, iterable: Iterable<T>): T;
+): Option<S>;
+export function find<T>(
+  predicate: (value: T, index: number) => unknown,
+  iterable: Iterable<T>
+): Option<T>;
 
 export function find<T>(
   predicate: (value: T, index: number) => unknown,
   iterable: Iterable<T> | AsyncIterable<T>
-): Promisable<T> {
+): Option<T> | Promise<Option<T>> {
   if (Symbol.asyncIterator in iterable) {
     return (async () => {
       let index = 0;
 
       for await (const value of iterable) {
-        if (await predicate(value, index++)) {
+        if (predicate(value, index++)) {
           return value;
         }
       }
 
-      throw new RangeError("No matching value found");
+      return None;
     })();
   }
 
@@ -148,5 +129,5 @@ export function find<T>(
     }
   }
 
-  throw new RangeError("No matching value found");
+  return None;
 }
