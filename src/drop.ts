@@ -1,3 +1,7 @@
+type Seq<T> =
+  | Iterable<T>
+  | AsyncIterable<T>;
+
 /**
  * `drop(limit, iterable)` is `ITERABLE` with `LIMIT` elements dropped from the start.
  *
@@ -61,7 +65,7 @@ export function drop<T>(limit: number, iterable: Iterable<T>): Generator<T, void
 
 export function drop<T>(
   limit: number,
-  iterable: Iterable<T> | AsyncIterable<T>
+  iterable: Seq<T>
 ): Generator<T, void, unknown> | AsyncGenerator<T, void, unknown> {
   if (Symbol.asyncIterator in iterable) {
     return (async function* drop() {

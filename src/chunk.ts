@@ -1,3 +1,7 @@
+type Seq<T> =
+  | Iterable<T>
+  | AsyncIterable<T>;
+
 /**
  * `chunk(limit, iterable)` is a new generator that yields elements of `ITERABLE` materialized as arrays of max size `LIMIT`.
  *
@@ -87,7 +91,7 @@ export function chunk<T>(
 ): AsyncGenerator<T[], void, unknown>;
 export function chunk<T>(
   limit: number,
-  iterable: Iterable<T> | AsyncIterable<T>
+  iterable: Seq<T>
 ): Generator<T[]> | AsyncGenerator<T[]> {
   if (Symbol.asyncIterator in iterable) {
     return (async function* () {

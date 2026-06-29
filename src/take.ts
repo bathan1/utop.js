@@ -1,3 +1,7 @@
+type Seq<T> =
+  | Iterable<T>
+  | AsyncIterable<T>;
+
 /**
  * `take(limit, iterable)` is the new sequence that takes `LIMIT` elements from `ITERABLE` when `LIMIT` is non-negative
  * or throws {@link RangeError} otherwise when `LIMIT` is negative or `NaN`.
@@ -70,7 +74,7 @@ export function take<T>(limit: number, iterable: Iterable<T>): Generator<T, void
 
 export function take<T>(
   limit: number,
-  iterable: Iterable<T> | AsyncIterable<T>
+  iterable: Seq<T>
 ): Generator<T, void, unknown> | AsyncGenerator<T, void, unknown> {
   if (Symbol.asyncIterator in iterable) {
     return (async function* take() {

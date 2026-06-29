@@ -1,4 +1,4 @@
-import { None, type Option } from "./types.js";
+import { type Option } from "./types.js";
 
 /**
  * `filterMap(callbackfn, iterable)` lazily yields each defined `CALLBACKFN` result for `ITERABLE`.

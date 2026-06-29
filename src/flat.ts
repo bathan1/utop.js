@@ -1,3 +1,4 @@
+export {};
 /**
  * `flat(iterable)` lazily flattens one level of nested `ITERABLE`.
  *

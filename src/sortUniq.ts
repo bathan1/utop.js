@@ -1,3 +1,5 @@
+export {};
+
 /**
  * `sortUniq(compareFn, iterable)` sorts `ITERABLE` with `COMPAREFN` and removes comparator-equal neighbors.
  *

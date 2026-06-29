@@ -1,6 +1,5 @@
 import type { Promisable, Either } from "./types";
 
-
 /**
  * `partitionMap(callbackfn, iterable)` separates `CALLBACKFN` results for `ITERABLE` into left and right values.
  *

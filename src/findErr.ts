@@ -1,3 +1,7 @@
+type Seq<T> =
+  | Iterable<T>
+  | AsyncIterable<T>;
+
 /**
  * `findErr(predicate, iterable)` returns the first value in `ITERABLE` matching `PREDICATE` or throws
  * {@link RangeError} if no such value is found.
@@ -90,7 +94,7 @@ export function findErr<T>(
 
 export function findErr<T>(
   predicate: (value: T, index: number) => unknown,
-  iterable: Iterable<T> | AsyncIterable<T>
+  iterable: Seq<T>
 ): T | Promise<T> {
   if (Symbol.asyncIterator in iterable) {
     return (async () => {

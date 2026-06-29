@@ -1,3 +1,9 @@
+import type { Promisable } from "./types.js";
+
+type Seq<T> =
+  | Iterable<T>
+  | AsyncIterable<T>;
+
 /**
  * `includes(searchElement, iterable, fromIndex?)` reports whether `SEARCH_ELEMENT` occurs in `ITERABLE` at or after `FROM_INDEX`.
  *
@@ -6,10 +12,14 @@
  * const hasAdmin = includes("admin", roles);
  * ```
  *
- * `includes` has no async sugar; materialize async input before calling it.
+ * When `ITERABLE` is async, then this handles `await`-ing its values before comparing against `SEARCH_ELEMENT`.
  *
  * ```ts
- * const hasAdmin = includes("admin", await Array.fromAsync(roles()));
+ * async function* roles() {
+ *   yield "member";
+ *   yield "admin";
+ * }
+ * const hasAdmin = includes("admin", roles());
  * ```
  *
  * ### Examples
@@ -29,9 +39,30 @@
  */
 export function includes<T>(
   searchElement: T,
+  iterable: AsyncIterable<T>,
+  fromIndex?: number
+): Promise<boolean>;
+export function includes<T>(
+  searchElement: T,
   iterable: Iterable<T>,
+  fromIndex?: number
+): boolean;
+export function includes<T>(
+  searchElement: T,
+  iterable: Seq<T>,
   fromIndex: number = 0
-): boolean {
+): Promisable<boolean> {
+  if (Symbol.asyncIterator in iterable) {
+    return (async () => {
+      let index = 0;
+      const start = Math.max(0, fromIndex);
+      for await (const value of iterable) {
+        if (index >= start && (Object.is(searchElement, value) || searchElement === value)) return true;
+        index++;
+      }
+      return false;
+    })();
+  }
   let index = 0;
   const start = Math.max(0, fromIndex);
   for (const value of iterable) {

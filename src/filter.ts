@@ -1,3 +1,7 @@
+type Seq<T> =
+  | Iterable<T>
+  | AsyncIterable<T>;
+
 /**
  * `filter(predicate, iterable)` lazily yields the values in `ITERABLE` that satisfy `PREDICATE`.
  *
@@ -55,7 +59,7 @@ export function filter<T>(
 
 export function filter<T>(
   predicate: (value: T, index: number) => unknown,
-  iterable: Iterable<T> | AsyncIterable<T>
+  iterable: Seq<T>
 ): Generator<T, void, unknown> | AsyncGenerator<T, void, unknown> {
   if (Symbol.asyncIterator in iterable) {
     return (async function* filter() {

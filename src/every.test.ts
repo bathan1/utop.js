@@ -1,6 +1,5 @@
 import { describe, it, expect } from "vitest";
 import { every } from "./every.js";
-import { forEach } from "./forEach.js";
 
 describe("every(predicate, iterable)", () => {
   it("is `true` when every value matches `PREDICATE`", () => {
@@ -17,15 +16,15 @@ describe("every(predicate, iterable)", () => {
       yield "world";
     }
 
-    expect(await every((x) => x.length === 5, messageQueue()));
+    expect(await every((x) => x.length === 5, messageQueue())).toEqual(true);
   });
 
-  it("awaits `PREDICATE` for async `ITERABLE`", async () => {
-    async function* values() {
-      yield 1;
-      yield 2;
+  it("does NOT await `PREDICATE` on async `ITERABLE`", async () => {
+    async function* messageQueue() {
+      yield "hello";
+      yield "world";
     }
 
-    expect(await every(async (value) => value > 0, values())).toBe(true);
-  });
+    expect(await every(async (x) => x.length === 1, messageQueue())).toEqual(true);
+  })
 });

@@ -4,8 +4,6 @@
  */
 type Falsy = false | 0 | 0n | null | undefined | "";
 
-/**
- */
 type Predicate<T, S extends T = T> = ((value: T) => boolean) | ((value: T) => value is S);
 
 /**

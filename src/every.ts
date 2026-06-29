@@ -1,3 +1,7 @@
+type Seq<T> =
+  | Iterable<T>
+  | AsyncIterable<T>;
+
 /**
  * `every(predicate, iterable)` is `true` if every `value` in `ITERABLE` satisfies
  * `PREDICATE(value)` or `false` otherwise.
@@ -59,8 +63,12 @@
  * expect(await every(async (value) => value > 0, values())).toBe(true);
  * ```
  */
+export function every<T, S extends T>(
+  predicate: (value: T, index: number) => value is S,
+  iterable: AsyncIterable<T>
+): Promise<boolean>;
 export function every<T>(
-  predicate: (value: T, index: number) => Promisable<unknown>,
+  predicate: (value: T, index: number) => unknown,
   iterable: AsyncIterable<T>
 ): Promise<boolean>;
 export function every<T, S extends T>(
@@ -74,13 +82,13 @@ export function every<T>(
 
 export function every(
   predicate: (value: unknown, index: number) => Promisable<unknown>,
-  iterable: Iterable<unknown> | AsyncIterable<unknown>
+  iterable: Seq<unknown>
 ): boolean | Promise<boolean> {
   if (Symbol.asyncIterator in iterable) {
     return (async () => {
       let index = 0;
       for await (const value of iterable) {
-        if (!(await predicate(value, index++))) {
+        if (!predicate(value, index++)) {
           return false;
         }
       }
