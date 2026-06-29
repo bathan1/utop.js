@@ -6,6 +6,54 @@ export type Option<T> =
   | undefined;
 
 /**
+ * @example
+ * It coerces null VALUE to undefined
+ * ```ts
+ * expect(Option(null)).not.toEqual(null);
+ * expect(Option(null)).toEqual(undefined);
+ * ```
+ */
+export function Option<T>(value: T | null | undefined): Option<NonNullable<T>> {
+  return value ?? None;
+}
+type OptionAllKeys<T extends object> = {
+  [K in keyof T]: null extends T[K]
+    ? Option<NonNullable<T[K]>>
+    : undefined extends T[K]
+      ? Option<NonNullable<T[K]>>
+      : T[K];
+};
+
+/**
+ * @example
+ * It coerces all null keyed values in OBJ to undefined
+ * ```ts
+ * const obj = {
+ *   s: "",
+ *   n: 0,
+ *   bn: 0n,
+ *   b: true,
+ *   u: undefined,
+ *   null: null,
+ * };
+ * const result = Option.allKeys(obj);
+ * expect(result).toEqual({
+ *   s: "",
+ *   n: 0,
+ *   bn: 0n,
+ *   b: true,
+ *   u: undefined,
+ *   null: undefined,
+ * });
+ * ```
+ */
+Option.allKeys = function allKeys<T extends object>(obj: T): OptionAllKeys<T> {
+  return Object.fromEntries(
+    Object.entries(obj).map(([key, value]) => [key, Option(value)])
+  ) as OptionAllKeys<T>;
+};
+
+/**
  * `Some<T>` is just `NonNullable<T>`. Even though `null` is not the
  * same as our userland {@link None} since that is just an alias for
  * `undefined`, in general, when we want to assert `Some<T>`, that means
