@@ -55,9 +55,13 @@
           "path": "./src/every.ts",
           "type": "registry:lib",
           "target": "@lib/utop/every.ts"
+        },
+        {
+          "path": "./src/types.ts",
+          "type": "registry:lib",
+          "target": "@lib/utop/types.ts"
         }
-      ],
-      "registryDependencies": ["./src/types.ts"]
+      ]
     },
     {
       "name": "filter.js",
@@ -67,9 +71,13 @@
           "path": "./src/filter.ts",
           "type": "registry:lib",
           "target": "@lib/utop/filter.ts"
+        },
+        {
+          "path": "./src/types.ts",
+          "type": "registry:lib",
+          "target": "@lib/utop/types.ts"
         }
-      ],
-      "registryDependencies": ["./src/types.ts"]
+      ]
     },
     {
       "name": "filterMap.js",
@@ -79,9 +87,13 @@
           "path": "./src/filterMap.ts",
           "type": "registry:lib",
           "target": "@lib/utop/filterMap.ts"
+        },
+        {
+          "path": "./src/types.ts",
+          "type": "registry:lib",
+          "target": "@lib/utop/types.ts"
         }
-      ],
-      "registryDependencies": ["./src/types.ts"]
+      ]
     },
     {
       "name": "find.js",
@@ -91,9 +103,13 @@
           "path": "./src/find.ts",
           "type": "registry:lib",
           "target": "@lib/utop/find.ts"
+        },
+        {
+          "path": "./src/types.ts",
+          "type": "registry:lib",
+          "target": "@lib/utop/types.ts"
         }
-      ],
-      "registryDependencies": ["./src/types.ts"]
+      ]
     },
     {
       "name": "findErr.js",
@@ -114,9 +130,13 @@
           "path": "./src/findMap.ts",
           "type": "registry:lib",
           "target": "@lib/utop/findMap.ts"
+        },
+        {
+          "path": "./src/types.ts",
+          "type": "registry:lib",
+          "target": "@lib/utop/types.ts"
         }
-      ],
-      "registryDependencies": ["./src/types.ts"]
+      ]
     },
     {
       "name": "flat.js",
@@ -137,9 +157,13 @@
           "path": "./src/flatMap.ts",
           "type": "registry:lib",
           "target": "@lib/utop/flatMap.ts"
+        },
+        {
+          "path": "./src/types.ts",
+          "type": "registry:lib",
+          "target": "@lib/utop/types.ts"
         }
-      ],
-      "registryDependencies": ["./src/types.ts"]
+      ]
     },
     {
       "name": "forEach.js",
@@ -149,9 +173,13 @@
           "path": "./src/forEach.ts",
           "type": "registry:lib",
           "target": "@lib/utop/forEach.ts"
+        },
+        {
+          "path": "./src/types.ts",
+          "type": "registry:lib",
+          "target": "@lib/utop/types.ts"
         }
-      ],
-      "registryDependencies": ["./src/types.ts"]
+      ]
     },
     {
       "name": "includes.js",
@@ -172,9 +200,18 @@
           "path": "./src/join.ts",
           "type": "registry:lib",
           "target": "@lib/utop/join.ts"
+        },
+        {
+          "path": "./src/map.ts",
+          "type": "registry:lib",
+          "target": "@lib/utop/map.ts"
+        },
+        {
+          "path": "./src/types.ts",
+          "type": "registry:lib",
+          "target": "@lib/utop/types.ts"
         }
-      ],
-      "registryDependencies": ["./src/map.ts"]
+      ]
     },
     {
       "name": "map.js",
@@ -184,9 +221,13 @@
           "path": "./src/map.ts",
           "type": "registry:lib",
           "target": "@lib/utop/map.ts"
+        },
+        {
+          "path": "./src/types.ts",
+          "type": "registry:lib",
+          "target": "@lib/utop/types.ts"
         }
-      ],
-      "registryDependencies": ["./src/types.ts"]
+      ]
     },
     {
       "name": "not.js",
@@ -251,9 +292,13 @@
           "path": "./src/reduce.ts",
           "type": "registry:lib",
           "target": "@lib/utop/reduce.ts"
+        },
+        {
+          "path": "./src/types.ts",
+          "type": "registry:lib",
+          "target": "@lib/utop/types.ts"
         }
-      ],
-      "registryDependencies": ["./src/types.ts"]
+      ]
     },
     {
       "name": "some.js",
@@ -263,9 +308,13 @@
           "path": "./src/some.ts",
           "type": "registry:lib",
           "target": "@lib/utop/some.ts"
+        },
+        {
+          "path": "./src/types.ts",
+          "type": "registry:lib",
+          "target": "@lib/utop/types.ts"
         }
-      ],
-      "registryDependencies": ["./src/types.ts"]
+      ]
     },
     {
       "name": "sort.js",
