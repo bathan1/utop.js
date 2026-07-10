@@ -6,7 +6,7 @@ title: perform
 
 > **perform**\<`T`, `R`\>(`iterator`): `R`
 
-Defined in: ext-iterator/perform.ts:27
+Defined in: [ext-iterator/perform.ts:27](https://github.com/bathan1/utop.js/blob/65acd6db7d1f070fc2dfb77c183a1c31994c8529/src/ext-iterator/perform.ts#L27)
 
 `perform(iterator)` consumes `ITERATOR` and returns its final return value.
 

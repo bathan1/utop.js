@@ -6,7 +6,7 @@ title: orderBy
 
 > **orderBy**\<`T`, `Keys`\>(`keys`, `direction`, `iterable`): `T`[]
 
-Defined in: ext-iterator/orderBy.ts:43
+Defined in: [ext-iterator/orderBy.ts:43](https://github.com/bathan1/utop.js/blob/65acd6db7d1f070fc2dfb77c183a1c31994c8529/src/ext-iterator/orderBy.ts#L43)
 
 `orderBy(keys, direction, iterable)` returns `ITERABLE` ordered by `KEYS` in `DIRECTION`.
 

@@ -45,15 +45,6 @@ importers:
         specifier: ^4.106.0
         version: 4.106.0
 
-  examples/dummy-json:
-    devDependencies:
-      '@types/node':
-        specifier: ^26.0.1
-        version: 26.0.1
-      typescript:
-        specifier: ^6.0.3
-        version: 6.0.3
-
 packages:
 
   '@algolia/abtesting@1.21.1':
